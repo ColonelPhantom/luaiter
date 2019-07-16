@@ -15,6 +15,9 @@ end
 function iterator.unwrapfactory(fn)
     return function() return iterator.unwrap(fn) end
 end
+function iterator.nextraw(iter)
+    return iter.__iterfn()
+end
 function iterator.fromwrapped(wfn)
     return setmetatable({__iterfn = wfn}, {__call = iterator.unwrapfactory(wfn), __index = iterator})
 end
@@ -46,9 +49,6 @@ function iterator.fromarr(t)
         end
     end
     return iterator.frompairs(arrnext, t, 0)
-end
-function iterator.nextraw(iter)
-    return iter.__iterfn()
 end
 
 function iterator.map(iter, mapfn)
