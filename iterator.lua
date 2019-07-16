@@ -125,3 +125,11 @@ function iterator.chain(iter1, iter2)
     end
     return iterator.fromwrapped(chainfn)
 end
+function iterator.take(iter, count)
+    local function takefn()
+        if count <= 0 then return true, {} end
+        count = count - 1
+        return iter:nextraw()
+    end
+    return iterator.fromwrapped(takefn)
+end
