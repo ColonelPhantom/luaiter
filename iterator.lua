@@ -2,6 +2,7 @@ local unpack = table.unpack or unpack
 
 iterator = {}
 
+-- Utility functions
 function iterator.wrap(...)
     return select('#', ...) == 0, {...}
 end
@@ -15,11 +16,10 @@ end
 function iterator.unwrapfactory(fn)
     return function() return iterator.unwrap(fn) end
 end
-function iterator.nextraw(iter)
-    return iter.__iterfn()
-end
+
+-- Constructors
 function iterator.fromwrapped(wfn)
-    return setmetatable({__iterfn = wfn}, {__call = iterator.unwrapfactory(wfn), __index = iterator})
+    return setmetatable({nextraw = wfn}, {__call = iterator.unwrapfactory(wfn), __index = iterator})
 end
 function iterator.fromfn(fn)
     return iterator.fromwrapped(iterator.wrapfactory(fn))
@@ -51,6 +51,7 @@ function iterator.fromarr(t)
     return iterator.frompairs(arrnext, t, 0)
 end
 
+-- Utility functions
 function iterator.map(iter, mapfn)
     function iterfn()
         local eoi, t = iter:nextraw()
