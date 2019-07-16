@@ -52,6 +52,20 @@ iterator.fromfn(counter(1))
         :scan(function(acc, v) return acc*v end, 1)
         :take(5):foreach(print)
 
+-- Benchmark
+local iters = 10000000
+local tb = os.clock()
+print(iterator.fromfn(counter(1)):take(iters):fold(function(acc,v) return acc + 1/v end))
+print(string.format("elapsed time (iter): %.2fs\n", os.clock() - tb))
+local tb = os.clock()
+local acc = 0
+for i=1,iters do
+    acc = acc + 1/i 
+end
+print(acc)
+print(string.format("elapsed time (for): %.2fs\n", os.clock() - tb))
+
+
 -- local itercount = iterator.fromfn(counter(5)):filter(isEven)
 --         :zip(iterator.fromfn(counter(-30)))
 --         :foreach(print)
