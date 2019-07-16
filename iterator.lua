@@ -1,3 +1,5 @@
+local unpack = table.unpack or unpack
+
 iterator = {}
 
 function iterator.wrap(...)
