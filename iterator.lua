@@ -78,11 +78,8 @@ function iterator.collect(iter)
     local tbl = {}
     while true do
         local eoi, t = iter:nextraw()
-
         if eoi then return tbl end
-
         table.insert(tbl, t)
-        end
     end
 end
 function iterator.foreach(iter, fn)
