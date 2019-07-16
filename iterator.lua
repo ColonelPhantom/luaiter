@@ -122,7 +122,7 @@ function iterator.zip(iter1, iter2)
         if eoi1 then return true, nil end
         local eoi2, t2 = iter2:nextraw()
         if eoi2 then return true, nil end
-        return false, {t1, t2}
+        return false, setmetatable({t1, t2}, {__call = table.unpack})
     end
     return iterator.fromwrapped(zipfn)
 end

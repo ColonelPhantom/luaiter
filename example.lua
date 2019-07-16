@@ -81,7 +81,7 @@ print(string.format("elapsed time (for): %.2fs", os.clock() - tb))
 print("ZIP")
 local itercount = iterator.fromfn(counter(5)):filter(isEven):take(5)
         :zip(iterator.fromfn(counter(-30)))
-        :foreach(function(v) print(unpack(v)) end)
+        :foreach(function(v) print(v()) end)
 -- iterator.fromfn(counter(5)):filter(isEven):map(square):enumerate():foreach(print)
 
 print("FROMARR")
