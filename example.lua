@@ -38,13 +38,20 @@ function factorial(n)
         return i
     end
     local result = 1
-    return iterator.fromfn(function() i=i+1 return i end):take(n)
+    return iterator.fromfn(counter):take(n)
         :foreach(function(v) result = v * result return result end)
 end
-print(factorial(5))
+print("Factorial(5)", factorial(5))
 
-iterator.fromfn(counter(1)):take(5):skip(1)
-:foreach(print)
+print("Take 5 skip 1")
+iterator.fromfn(counter(1)):take(5):skip(1):foreach(print)
+print()
+print("Skip 1 take 5")
+iterator.fromfn(counter(1)):skip(1):take(5):foreach(print)
+print()
+
+
+print("nth(3)", iterator.fromfn(counter(1)):nth(3))
 
 -- local itercount = iterator.fromfn(counter(5)):filter(isEven)
 --         :zip(iterator.fromfn(counter(-30)))

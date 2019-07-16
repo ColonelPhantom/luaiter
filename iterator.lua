@@ -139,3 +139,9 @@ function iterator.skip(iter, count)
     end
     return iter
 end
+function iterator.nth(iter, count)
+    for i = 1,count - 1 do
+        iter()
+    end
+    return iter()
+end
