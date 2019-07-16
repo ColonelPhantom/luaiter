@@ -63,27 +63,27 @@ iterator.fromfn(counter(1))
 -- Benchmark
 local iters = 1000000000
 local tb = os.clock()
+
 print(iterator.fromfn(counter(1)):take(iters):fold(function(acc,v) return acc + 1/v end))
-print(string.format("elapsed time (iter): %.2fs\n", os.clock() - tb))
+
+print(string.format("elapsed time (iter): %.2fs", os.clock() - tb))
+
 local tb = os.clock()
+
 local acc = 0
-for i in counter(1) do
+for i=1,iters do
     acc = acc + 1/i 
-    if i >= iters then break end 
 end
 print(acc)
-print(string.format("elapsed time (for): %.2fs\n", os.clock() - tb))
 
+print(string.format("elapsed time (for): %.2fs", os.clock() - tb))
 
--- local itercount = iterator.fromfn(counter(5)):filter(isEven)
---         :zip(iterator.fromfn(counter(-30)))
---         :foreach(print)
+print("ZIP")
+local itercount = iterator.fromfn(counter(5)):filter(isEven):take(5)
+        :zip(iterator.fromfn(counter(-30)))
+        :foreach(function(v) print(v()) end)
 -- iterator.fromfn(counter(5)):filter(isEven):map(square):enumerate():foreach(print)
--- local a = {"hello", 3, nil, 42.5, "bye"}
--- local it = iterator.fromarr(a)
--- print(it())
--- print(it())
--- print(it())
--- print(it())
--- print(it())
--- print(it())
+
+print("FROMARR")
+local a = {"hello", 3, nil, 42.5, "bye"}
+local it = iterator.fromarr(a):foreach(print)
