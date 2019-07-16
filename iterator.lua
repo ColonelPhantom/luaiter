@@ -1,17 +1,17 @@
-local unpack = table.unpack or unpack
+iterator.unpack = unpack or table.unpack
 
 iterator = {}
 
 -- Utility functions
 function iterator.wrap(...)
-    return select('#', ...) == 0, {...}
+    return select('#', ...) == 0, ...
 end
 function iterator.wrapfactory(fn)
     return function() return iterator.wrap(fn()) end
 end
 function iterator.unwrap(fn)
     local eoi, t = fn()
-    if eoi then return else return unpack(t) end
+    if eoi then return else return t end
 end
 function iterator.unwrapfactory(fn)
     return function() return iterator.unwrap(fn) end
@@ -58,7 +58,7 @@ function iterator.map(iter, mapfn)
         if eoi then 
             return true, {}
         else
-            return false, {mapfn(unpack(t))}
+            return false, mapfn(t)
         end
     end
     return iterator.fromwrapped(iterfn)
@@ -69,7 +69,7 @@ function iterator.filter(iter, filterfn)
         repeat
             eoi, t = iter:nextraw()
             if eoi then return true, {} end
-        until filterfn(unpack(t))
+        until filterfn(t)
         return false, t
     end
     return iterator.fromwrapped(iterfn)
@@ -81,8 +81,7 @@ function iterator.collect(iter)
 
         if eoi then return tbl end
 
-        if #t <= 1 then table.insert(tbl, unpack(t))
-        else table.insert(tbl, t)
+        table.insert(tbl, t)
         end
     end
 end
@@ -91,7 +90,7 @@ function iterator.foreach(iter, fn)
     while true do
         eoi, t = iter:nextraw()
         if eoi then return fnval
-        else fnval = fn(unpack(t))
+        else fnval = fn(t)
         end
     end
 end
@@ -101,7 +100,7 @@ function iterator.fold(iter, fn, acc)
     while true do
         eoi, t = iter:nextraw()
         if eoi then return acc
-        else acc = fn(acc, unpack(t))
+        else acc = fn(acc, t)
         end
     end
 end
@@ -123,11 +122,10 @@ end
 function iterator.zip(iter1, iter2)
     local function zipfn()
         local eoi1, t1 = iter1:nextraw()
-        if eoi1 then return true, {} end
+        if eoi1 then return true, nil end
         local eoi2, t2 = iter2:nextraw()
-        if eoi2 then return true, {} end
-        iterator.fromarr(t2):foreach(function(val) table.insert(t1, val) end)
-        return false, t1
+        if eoi2 then return true, nil end
+        return false, {t1, t2}
     end
     return iterator.fromwrapped(zipfn)
 end

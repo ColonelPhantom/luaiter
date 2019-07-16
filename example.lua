@@ -75,9 +75,10 @@ print(acc)
 print(string.format("elapsed time (for): %.2fs\n", os.clock() - tb))
 
 
--- local itercount = iterator.fromfn(counter(5)):filter(isEven)
---         :zip(iterator.fromfn(counter(-30)))
---         :foreach(print)
+print("ZIP")
+local itercount = iterator.fromfn(counter(5)):filter(isEven):take(5)
+        :zip(iterator.fromfn(counter(-30)))
+        :foreach(function(v) print(unpack(v)) end)
 -- iterator.fromfn(counter(5)):filter(isEven):map(square):enumerate():foreach(print)
 -- local a = {"hello", 3, nil, 42.5, "bye"}
 -- local it = iterator.fromarr(a)
