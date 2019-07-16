@@ -53,7 +53,7 @@ end
 
 -- Utility functions
 function iterator.map(iter, mapfn)
-    function iterfn()
+    local function iterfn()
         local eoi, t = iter:nextraw()
         if eoi then 
             return true, {}
@@ -64,7 +64,7 @@ function iterator.map(iter, mapfn)
     return iterator.fromwrapped(iterfn)
 end
 function iterator.filter(iter, filterfn)
-    function iterfn()
+    local function iterfn()
         local eoi, t
         repeat
             eoi, t = iter:nextraw()
