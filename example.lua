@@ -61,7 +61,7 @@ iterator.fromfn(counter(1))
         :take(5):foreach(print)
 
 -- Benchmark
-local iters = 10000000
+local iters = 1000000000
 local tb = os.clock()
 print(iterator.fromfn(counter(1)):take(iters):fold(function(acc,v) return acc + 1/v end))
 print(string.format("elapsed time (iter): %.2fs\n", os.clock() - tb))
