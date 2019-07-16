@@ -37,9 +37,8 @@ function factorial(n)
         i = i + 1
         return i
     end
-    local result = 1
     return iterator.fromfn(counter):take(n)
-        :foreach(function(v) result = v * result return result end)
+        :fold(function(acc, v) return acc*v end, 1)
 end
 print("Factorial(5)", factorial(5))
 

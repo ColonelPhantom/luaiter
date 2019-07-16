@@ -95,6 +95,16 @@ function iterator.foreach(iter, fn)
         end
     end
 end
+function iterator.fold(iter, fn, acc)
+    local eoi, t
+    acc = acc or 0
+    while true do
+        eoi, t = iter:nextraw()
+        if eoi then return acc
+        else acc = fn(acc, unpack(t))
+        end
+    end
+end
 function iterator.enumerate(iter)
     local i = 0
     local counter = function()
