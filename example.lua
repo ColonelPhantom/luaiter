@@ -44,13 +44,13 @@ print("Factorial(5)", factorial(5))
 
 print("Take 5 skip 1")
 iterator.fromfn(counter(1)):take(5):skip(1):foreach(print)
-print()
-print("Skip 1 take 5")
-iterator.fromfn(counter(1)):skip(1):take(5):foreach(print)
-print()
-
 
 print("nth(3)", iterator.fromfn(counter(1)):nth(3))
+
+print("Scanfactorial")
+iterator.fromfn(counter(1))
+        :scan(function(acc, v) return acc*v end, 1)
+        :take(5):foreach(print)
 
 -- local itercount = iterator.fromfn(counter(5)):filter(isEven)
 --         :zip(iterator.fromfn(counter(-30)))
