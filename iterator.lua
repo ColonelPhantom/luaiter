@@ -1,6 +1,6 @@
 iterator = {}
 
-iterator.unpack = unpack or table.unpack
+table.unpack = table.unpack or unpack
 
 -- Utility functions
 function iterator.wrap(...)
