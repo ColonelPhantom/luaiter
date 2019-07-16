@@ -19,6 +19,14 @@ function counter(i)
         return i
     end
 end
+function counterlimit(i, stop)
+    i = i - 1
+    return function()
+        i = i + 1
+        if i > stop then return end
+        return i
+    end
+end
 
 function accumulator(start)
     start = start or 0
@@ -59,8 +67,9 @@ print(iterator.fromfn(counter(1)):take(iters):fold(function(acc,v) return acc + 
 print(string.format("elapsed time (iter): %.2fs\n", os.clock() - tb))
 local tb = os.clock()
 local acc = 0
-for i=1,iters do
+for i in counter(1) do
     acc = acc + 1/i 
+    if i >= iters then break end 
 end
 print(acc)
 print(string.format("elapsed time (for): %.2fs\n", os.clock() - tb))
