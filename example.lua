@@ -43,6 +43,9 @@ function factorial(n)
 end
 print(factorial(5))
 
+iterator.fromfn(counter(1)):take(5):skip(1)
+:foreach(print)
+
 -- local itercount = iterator.fromfn(counter(5)):filter(isEven)
 --         :zip(iterator.fromfn(counter(-30)))
 --         :foreach(print)

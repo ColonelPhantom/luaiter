@@ -133,3 +133,9 @@ function iterator.take(iter, count)
     end
     return iterator.fromwrapped(takefn)
 end
+function iterator.skip(iter, count)
+    for i=1,count do
+        iter()
+    end
+    return iter
+end
