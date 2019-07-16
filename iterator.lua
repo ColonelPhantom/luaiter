@@ -105,6 +105,13 @@ function iterator.fold(iter, fn, acc)
         end
     end
 end
+function iterator.scan(iter, fn, acc)
+    acc = acc or 0
+    return iter:map(function(...)
+        acc = fn(acc, ...)
+        return acc
+    end)
+end
 function iterator.enumerate(iter)
     local i = 0
     local counter = function()
